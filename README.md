@@ -47,13 +47,17 @@ Selenium-Test-Framework/
 bash
 git clone https://github.com/Yummy695/Selenium-Test-Framework.git
 cd Selenium-Test-Framework
+
 2.安装依赖
 pip install -r requirements.txt
+
 3.运行测试
 cd selenium_test
 pytest tests/ -v
+
 4.生成html报告
 pytest tests/ --html=reports/report.html --self-contained-html
+
 运行结果实例
 ==================== test session starts ====================
 collected 9 items
