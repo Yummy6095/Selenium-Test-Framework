@@ -55,9 +55,6 @@ pip install -r requirements.txt
 cd selenium_test
 pytest tests/ -v
 
-4.生成html报告
-pytest tests/ --html=reports/report.html --self-contained-html
-
 运行结果实例
 ==================== test session starts ====================
 collected 9 items
