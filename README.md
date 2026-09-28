@@ -55,6 +55,9 @@ pip install -r requirements.txt
 cd selenium_test
 pytest tests/ -v
 
+4.Allure截图展示
+<img width="2559" height="1496" alt="image" src="https://github.com/user-attachments/assets/e3101c42-bb99-47ff-84b3-011e9a862393" />
+
 运行结果实例
 ==================== test session starts ====================
 collected 9 items
