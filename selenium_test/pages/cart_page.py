@@ -37,11 +37,14 @@ class CartPage:
             return 0
 
     def open_cart(self):
-        """打开购物车页面"""
-        cart_link = self.wait.until(
-            EC.element_to_be_clickable(self.SHOPPING_CART_LINK)
-        )
-        cart_link.click()
+        """打开购物车（增加短暂休眠防止页面跳转过快导致元素失效）"""
+        import time
+        time.sleep(0.5)
+        try:
+            cart_link = self.wait.until(EC.element_to_be_clickable(self.SHOPPING_CART_LINK))
+            cart_link.click()
+        except Exception:
+            self.driver.find_element(*self.SHOPPING_CART_LINK).click()
 
     def get_cart_items_count(self):
         """获取购物车中的商品数量"""
@@ -54,11 +57,14 @@ class CartPage:
             return 0
 
     def remove_item_from_cart(self):
-        """从购物车移除商品"""
-        remove_btn = self.wait.until(
-            EC.element_to_be_clickable(self.REMOVE_BUTTON)
-        )
-        remove_btn.click()
+        """移除商品（使用 JS 点击增强稳定性）"""
+        import time
+        time.sleep(0.5)  # 等待列表渲染
+        remove_btn = self.wait.until(EC.presence_of_element_located(self.REMOVE_BUTTON))
+        try:
+            self.driver.execute_script("arguments[0].click();", remove_btn)
+        except Exception:
+            self.driver.find_element(*self.REMOVE_BUTTON).click()
 
     def proceed_to_checkout(self):
         """去结算"""
@@ -68,8 +74,11 @@ class CartPage:
         checkout_btn.click()
 
     def continue_shopping(self):
-        """继续购物"""
-        continue_btn = self.wait.until(
-            EC.element_to_be_clickable(self.CONTINUE_SHOPPING_BUTTON)
-        )
-        continue_btn.click()
+        """继续购物（增加等待）"""
+        import time
+        time.sleep(0.5)
+        try:
+            continue_btn = self.wait.until(EC.element_to_be_clickable(self.CONTINUE_SHOPPING_BUTTON))
+            continue_btn.click()
+        except Exception:
+            self.driver.find_element(*self.CONTINUE_SHOPPING_BUTTON).click()

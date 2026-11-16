@@ -12,6 +12,7 @@ class CheckoutPage:
     CONTINUE_BUTTON = (By.ID, "continue")
     FINISH_BUTTON = (By.ID, "finish")
     COMPLETE_HEADER = (By.CLASS_NAME, "complete-header")
+    ERROR_MESSAGE = (By.CSS_SELECTOR, "[data-test='error']")
 
     def __init__(self, driver):
         self.driver = driver
@@ -26,12 +27,18 @@ class CheckoutPage:
         self.driver.find_element(*self.POSTAL_CODE_INPUT).send_keys(postal_code)
 
     def click_continue(self):
-        """点击继续"""
-        self.driver.find_element(*self.CONTINUE_BUTTON).click()
+        """点击继续（增加等待）"""
+        continue_btn = self.wait.until(
+            EC.element_to_be_clickable(self.CONTINUE_BUTTON)
+        )
+        continue_btn.click()
 
     def click_finish(self):
-        """点击完成"""
-        self.driver.find_element(*self.FINISH_BUTTON).click()
+        """点击完成（增加等待，确保按钮真的可以点击）"""
+        finish_btn = self.wait.until(
+            EC.element_to_be_clickable(self.FINISH_BUTTON)
+        )
+        finish_btn.click()
 
     def get_success_message(self):
         """获取成功提示"""
