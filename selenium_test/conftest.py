@@ -6,7 +6,6 @@ from selenium.webdriver.chrome.options import Options
 @pytest.fixture(scope="function")
 def driver():
     chrome_options = Options()
-    # 必须加这三个参数，否则 GitHub Actions 的服务器没屏幕，浏览器打不开
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
