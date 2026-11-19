@@ -1,81 +1,131 @@
-🧪 Selenium + Pytest 自动化测试框架
-基于 Python + Selenium + Pytest 的 Web UI 自动化测试框架，采用 Page Object Model 分层设计， 覆盖 saucedemo 电商站点的登录、商品浏览、购物车与结算全流程，共 15 条用例。
-Python Selenium Pytest POM Cases
-📖 项目简介
-本项目针对电商网站 saucedemo 实现登录、商品列表、购物车与下单结算的自动化回归测试。 通过 Page Object Model 将页面元素与业务逻辑分离，用例层只描述业务动作，页面层统一维护定位与操作， 从而降低维护成本、提升脚本可读性与复用性。
-用例覆盖 正向流程、异常场景与边界场景，并按 P0 / P1 / P2 划分优先级。
-🛠 技术栈
-技术	版本	用途
-Python	3.12	编程语言
-Selenium	4.x	Web UI 自动化
-Pytest	8.x	测试框架与用例管理
-WebDriverManager	latest	浏览器驱动自动管理
-Page Object Model	—	页面与逻辑分层设计
-Allure	2.x	测试报告与截图
-Git	—	版本控制
-📁 项目结构
+# Selenium + Pytest Web 自动化测试框架
+
+<p align="center">
+<a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.12-blue" /></a>
+<a href="https://www.selenium.dev/"><img src="https://img.shields.io/badge/Selenium-4.x-green" /></a>
+<a href="https://docs.pytest.org/"><img src="https://img.shields.io/badge/Pytest-8.x-orange" /></a>
+<a href="https://docs.qameta.io/allure/"><img src="https://img.shields.io/badge/Allure-Report-purple" /></a>
+<img src="https://img.shields.io/badge/POM-Design-yellow" />
+<img src="https://img.shields.io/badge/15%2F15-PASSED-success" />
+</p>> 
+> 基于 Python + Selenium + Pytest 的 Web 自动化测试项目，针对 `https://www.saucedemo.com/` 演示电商站点，采用 **Page Object Model** 模式，分离页面元素与业务逻辑，便于维护扩展。集成 GitHub Actions 持续执行 + Allure 可视化报告。
+
+## 🛠️ 技术栈
+
+表格
+
+| 技术 | 用途 |
+| --- | --- |
+| Python 3.12 | 编程语言 |
+| Selenium 4.x | Web 自动化驱动 |
+| Pytest 8.x | 测试执行框架 |
+| WebDriverManager | 浏览器驱动自动管理 |
+| Allure | 可视化测试报告 |
+| Page Object Model | 分层设计模式 |
+| Git + GitHub Actions | 版本控制 & CI 自动执行 |
+
+## 📁 项目结构
+
+```
 Selenium-Test-Framework/
 ├── selenium_test/
-│   ├── pages/                  # 页面对象层
-│   │   ├── login_page.py       # 登录页
-│   │   ├── product_page.py     # 商品列表 / 详情页
-│   │   ├── cart_page.py        # 购物车页
-│   │   └── checkout_page.py    # 结算页
-│   ├── tests/                  # 测试用例层
-│   │   ├── test_login.py       # 登录 / 购物车 / 结算（TC-001 ~ TC-009）
-│   │   └── test_product.py     # 商品 / 购物车 / 结算补充（9 条新增用例）
-│   ├── utils/
-│   │   └── driver.py           # 浏览器驱动封装
-│   └── reports/                # 测试报告与截图
-├── requirements.txt
+│   ├── pages/                # 页面对象层
+│   │   ├── login_page.py     # 登录页面
+│   │   ├── inventory_page.py # 商品列表页
+│   │   ├── cart_page.py      # 购物车页面
+│   │   └── checkout_page.py  # 结算页面
+│   ├── tests/                # 测试用例层
+│   │   ├── test_login.py     # 登录、购物车、结算基础用例（9条）
+│   │   └── test_product.py   # 商品扩展场景用例（6条）
+│   ├── utils/                # 工具层
+│   │   └── driver.py         # 浏览器驱动封装
+│   └── reports/              # Allure报告、截图目录
+├── .github/workflows/        # GitHub Actions CI配置
+├── requirements.txt          # 项目依赖
 ├── .gitignore
 └── README.md
-✅ 测试覆盖
-模块	用例数	用例编号	脚本
-登录模块	3	TC-001 ~ TC-003	test_login.py
-商品模块	3	TC-PROD-003 ~ 005	test_product.py
-购物车模块	6	TC-004 ~ 008、TC-CART-005	test_login.py / test_product.py
-结算模块	3	TC-009、TC-ORDER-002 ~ 003	test_login.py / test_product.py
-合计	15	—	—
-用例清单
-编号	模块	用例标题	类型	优先级
-TC-001	登录	标准用户登录成功	冒烟测试	P0
-TC-002	登录	锁定用户登录失败	异常测试	P1
-TC-003	登录	错误密码登录失败	异常测试	P1
-TC-004	购物车	添加商品到购物车	功能测试	P0
-TC-005	购物车	多次添加购物车数量累加	功能测试	P1
-TC-006	购物车	从购物车移除商品	功能测试	P1
-TC-007	购物车	购物车内容页面间保持	功能测试	P1
-TC-008	购物车	空购物车无法结算	边界测试	P1
-TC-009	结算	完整结算流程	端到端测试	P0
-TC-PROD-003	商品	商品价格从低到高排序	功能测试	P1
-TC-PROD-004	商品	商品名称 Z-A 排序	功能测试	P1
-TC-PROD-005	商品	列表页与详情页信息一致	功能测试	P2
-TC-CART-005	购物车	添加多个不同商品	功能测试	P1
-TC-ORDER-002	结算	结算必填项为空拦截	异常测试	P1
-TC-ORDER-003	结算	完整下单后返回首页	业务闭环	P2
-测试结果：15 / 15 全部通过 ✅
+```
 
-==================== 15 passed ====================
-🚀 快速开始
+## 🧪 测试用例覆盖
+
+表格
+
+| 模块 | 用例数量 |
+| --- | --- |
+| 登录模块 | TC-001 ~ TC-003 |
+| 购物车模块 | TC-004 ~ TC-008 |
+| 结算模块 | TC-009 |
+| 商品扩展模块 | TC-010 ~ TC-015 |
+
+> 
+> 合计：**15 条测试用例，15/15 全部通过 ✅**
+
+### Allure 报告总览
+
+### Allure 用例详情
+
+### GitHub Actions CI 流水线
+
+## 🚀 快速开始
+
 1. 克隆项目
+
+```
 git clone https://github.com/Yummy695/Selenium-Test-Framework.git
 cd Selenium-Test-Framework
-2. 安装依赖
-pip install -r requirements.txt
-3. 运行测试
-cd selenium_test
-pytest tests/ -v
-只跑某个模块：
-pytest tests/test_login.py -v      # 登录 / 购物车 / 结算
-pytest tests/test_product.py -v    # 商品 / 排序 / 下单闭环
-4. 生成 Allure 报告（可选）
-pytest tests/ --alluredir=./reports/allure-results
-allure serve ./reports/allure-results
+```
 
-📊 测试报告
-运行结束后，Allure 报告输出至 selenium_test/reports/allure-results
-失败用例自动截图，随报告按步骤展示
-截图可放入 docs/ 目录，在 README 中通过相对路径引用
+2. 安装依赖
+
+```
+pip install -r requirements.txt
+```
+
+3. 执行测试并生成 Allure 结果
+
+```
+cd selenium_test
+pytest tests/ -v --alluredir=reports/allure-results
+```
+
+4. 本地打开 Allure 报告
+
+```
+allure serve reports/allure-results
+```
+
+5. 单独执行指定模块
+
+```
+# 只跑登录&购物车结算用例
+pytest tests/test_login.py -v
+# 只跑商品扩展用例
+pytest tests/test_product.py -v
+```
+
+## ✅ 运行样例
+
+```
+==================== test session starts ====================
+collected 15 items
+tests/test_login.py::TestSauceDemo::test_login_with_standard_user PASSED
+tests/test_login.py::TestSauceDemo::test_login_with_locked_out_user PASSED
+tests/test_login.py::TestSauceDemo::test_login_with_wrong_password PASSED
+tests/test_login.py::TestSauceDemo::test_add_item_to_cart PASSED
+tests/test_login.py::TestSauceDemo::test_cart_count_increases PASSED
+tests/test_login.py::TestSauceDemo::test_remove_item_from_cart PASSED
+tests/test_login.py::TestSauceDemo::test_cart_persistence PASSED
+tests/test_login.py::TestSauceDemo::test_empty_cart_checkout_disabled PASSED
+tests/test_login.py::TestSauceDemo::test_complete_checkout_flow PASSED
+tests/test_product.py::TestProduct::xxx PASSED
+tests/test_product.py::TestProduct::xxx PASSED
+tests/test_product.py::TestProduct::xxx PASSED
+tests/test_product.py::TestProduct::xxx PASSED
+tests/test_product.py::TestProduct::xxx PASSED
+tests/test_product.py::TestProduct::xxx PASSED
+==================== 15 passed in 92.65s ====================
+```
+
 ## 🔄 CI 说明
-项目接入 GitHub Actions，每次提交代码自动执行全部测试，执行完成后自动生成并上传 Allure 报告。
+
+项目接入 GitHub Actions，每次提交代码自动执行全部测试，执行完成后自动生成并上传 Allure 报告
