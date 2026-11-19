@@ -1,3 +1,5 @@
-selenium>=4.10.0
+selenium
 pytest
 allure-pytest
+webdriver-manager
+pytest-rerunfailures
